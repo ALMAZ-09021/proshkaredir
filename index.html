@@ -1,3 +1,28 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="ru">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Открытие приложения PROШКА</title>-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <script>-->
+<!--        window.onload = function () {-->
+<!--            // Пытаемся открыть приложение-->
+<!--            window.location.href = "proshka://profile";-->
+
+<!--            // Если deeplink не сработал, через 2 секунды переадресуем на установку-->
+<!--            setTimeout(() => {-->
+<!--                window.location.href = "https://play.google.com/store/apps/details?id=com.smartini.proshka";-->
+<!--            }, 2000);-->
+<!--        };-->
+<!--    </script>-->
+<!--</head>-->
+<!--<body style="font-family: sans-serif; text-align: center; padding: 100px;">-->
+<!--<h2>Открываем приложение PROШКА...</h2>-->
+<!--<p>Если ничего не происходит, <a href="https://play.google.com/store/apps/details?id=com.smartini.proshka">установите приложение</a>.</p>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -5,14 +30,23 @@
     <title>Открытие приложения PROШКА</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        window.onload = function () {
-            // Пытаемся открыть приложение
-            window.location.href = "proshka://profile";
+        function isMobile() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
 
-            // Если deeplink не сработал, через 2 секунды переадресуем на установку
-            setTimeout(() => {
-                window.location.href = "https://play.google.com/store/apps/details?id=com.smartini.proshka";
-            }, 2000);
+        window.onload = function () {
+            if (isMobile()) {
+                // Переход на deeplink
+                window.location.href = "proshka://profile";
+
+                // Если не сработало — fallback через 2 сек
+                setTimeout(() => {
+                    window.location.href = "https://play.google.com/store/apps/details?id=com.smartini.proshka";
+                }, 2000);
+            } else {
+                // Открытие localhost если с ПК
+                window.location.href = "http://localhost:8081/profile";
+            }
         };
     </script>
 </head>
